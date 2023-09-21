@@ -1,4 +1,4 @@
-# EduHome
+# HospitalManagmentSystem
 
 ## Technologies Used
 - ASP.NET Core MVC
