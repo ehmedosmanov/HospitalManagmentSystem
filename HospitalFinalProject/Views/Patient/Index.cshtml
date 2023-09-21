@@ -1,0 +1,80 @@
+﻿ @model List<Patient>
+ 
+ @await Component.InvokeAsync("PageTitle", new { pageTitle = "Xəstələrin siyahısı", breadcrumbs = new[] { "Xəstələr" } })
+
+    <!-- row -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Xəstələrin siyahısı</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="dataTable" class="display" style="min-width: 845px">
+                            <thead>
+                                <tr>
+                                    <th>Şəkil</th>
+                                    <th>Ad Soyad</th>
+                                    <th>Yaş</th>
+                                    <th>Ünvan</th>
+                                    <th>Son Ziyarət</th>
+                                    <th>Qan Qrupu</th>
+                                    <th>Status</th>
+                                    <th>Əməliyyatlar</th>
+                                </tr>
+                            </thead>
+                            <tbody class="black-text">
+                                @foreach (Patient patient in Model)
+                            {
+                                <tr>
+                                    <td><img style="width:80px; border-radius:100%; object-fit:cover;" src="~/images/people/@patient.Img" alt="Xəstənin şəkli" class="img-thumbnail"></td>
+                                    <td>@($"{patient.FirstName} {patient.LastName}")</td>
+                                    <td>@(DateTime.Today.Year - patient.DateOfBirth.Year - (DateTime.Today < patient.DateOfBirth.AddYears(DateTime.Today.Year - patient.DateOfBirth.Year) ? 1 : 0))</td>
+                                    <td>@patient.Address</td>
+                                    <td>@patient.LastVisit.ToString("dd/MM/yyyy")</td>
+                                    <td>@patient.BloodGroup.GroupName</td>
+                                    <td>
+                                        @if (patient.PatientStatusId == 1)
+                                        {
+                                            <span class="badge badge-warning text-white">@patient.PatientStatus.Name</span>
+                                        }
+                                        else if (patient.PatientStatusId == 2)
+                                        {
+                                            <span class="badge badge-success text-white">@patient.PatientStatus.Name</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge">@patient.PatientStatus.Name</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-action="Detail" asp-route-id="@patient.Id"><i class="fa fa-eye fa-lg" style="font-size:1.4rem;"></i></a>
+                                        <a asp-action="Update" asp-route-id="@patient.Id"><i class="fa fa-pencil color-muted fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@patient.Id"><i class="ti-trash color-danger fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                               
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable()
+        });
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+}

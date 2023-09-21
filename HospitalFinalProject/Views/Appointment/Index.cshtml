@@ -1,0 +1,107 @@
+﻿@model List<Appointment>
+
+@await Component.InvokeAsync("PageTitle", new { pageTitle = "Rezervlərin siyahısı", breadcrumbs = new[] { "Rezervlər" } })
+
+<!-- row -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Rezervlərin siyahısı</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="dataTable" class="display" style="min-width: 845px">
+                        <thead>
+                            <tr>
+                                <th>Xəstənin şəkli</th>
+                                <th>Xəstənin adı</th>
+                                <th>Xəstənin mobil nömrə</th>
+                                <th>Cins</th>
+                                <th>Tarix</th>
+                                <th>Vaxt</th>
+                                <th>Həkim</th>
+                                <th>Zədə/Xəstəliy</th>
+                                <th>Əməliyyatlar</th>
+                            </tr>
+                        </thead>
+                        <tbody class="black-text">
+                            @foreach (Appointment appointment in Model)
+                            {
+                                <tr>
+                                    <td><img style="width:80px; border-radius:100%; object-fit:cover;" src="~/images/people/@appointment.Patient.Img" alt="Xəstənin şəkli" class="img-thumbnail"></td>
+                                    <td>@($"{appointment.Patient.FirstName} {appointment.Patient.LastName}")</td>
+                                    <td>@appointment.Patient.PhoneNumber</td>
+                                    <td>@appointment.Patient.Gender</td>
+                                    <td>
+                                        @{
+                                            if (appointment.DateOfAppointment != null)
+                                            {
+                                                @appointment.DateOfAppointment.Value.ToString("d")
+                                            }
+                                            else
+                                            {
+                                                @("N/A")
+
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (appointment.From != null && appointment.To != null)
+                                            {
+                                                @($"{appointment.From.Value.ToString("HH:mm")} - {appointment.To.Value.ToString("HH:mm")}")
+                                            }
+                                            else
+                                            {
+                                                @("N/A")
+                                              
+                                            }
+                                        }
+                                    </td>
+                                    <td>Dr. @appointment.Doctor.FirstName</td>
+                                    <td>@appointment.InjuryCondition</td>
+
+                                    
+                                    @*<td>
+                                        @if (!department.IsDeactive)
+                                        {
+                                            <div class="badge badge-success text-white">Active</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="badge badge-danger text-white">Deactive</div>
+
+                                        }
+                                    </td>*@
+                                    <td>
+                                        <a asp-action="Detail" asp-route-id="@appointment.Id"><i class="fa fa-eye fa-lg" style="font-size:1.4rem;"></i></a>
+                                        <a asp-action="Update" asp-route-id="@appointment.Id"><i class="fa fa-pencil color-muted fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+                                        @if (!appointment.IsDeactive)
+                                        {
+                                            <a asp-action="Activity" asp-route-id="@appointment.Id"><i class="fa-solid fa-xmark fa-lg color-danger ml-2" style="font-size:1.4rem;"></i></a>
+
+                                        }
+                                        else
+                                        {
+                                            <a asp-action="Activity" asp-route-id="@appointment.Id"><i class="fa-solid fa-check fa-lg color-danger ml-2" style="font-size:1.4rem;"></i></a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $("#dataTable").DataTable();
+    </script>
+}

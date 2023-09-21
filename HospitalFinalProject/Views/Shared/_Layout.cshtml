@@ -1,0 +1,506 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Xəstəxana Daxili sistem</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="~/images/pngwing.com.png">
+    <link href="~/vendor/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+    <link href="~/vendor/chartist/css/chartist.min.css" rel="stylesheet">
+    <link href="~/icons/line-awesome/css/line-awesome.min.css">
+    <link href="~/vendor/datatables/css/jquery.dataTables.min.css" />
+    <!-- Material color picker -->
+    <link href="~/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link href="~/css/admin.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
+    <style>
+        .dt-button {
+            display: inline-flex !important;
+            padding: 8px 12px !important;
+            background-color: #593bdb !important;
+            text-decoration: none !important;
+            color: #fff !important;
+            font: inherit !important;
+            cursor: pointer !important;
+            outline: inherit !important;
+            border-radius: 4px !important;
+            margin-left: 5px !important;
+            margin-bottom: 15px !important;
+        }
+
+        .delete-confirmation {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .confirmation-title {
+            margin-bottom: 20px;
+            font-size: 1.25rem;
+        }
+
+        .patient-info {
+            margin-bottom: 20px;
+        }
+
+        .patient-details {
+            margin-top: 10px;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .detail-label {
+            min-width: 120px;
+        }
+
+        .detail-value {
+            flex-grow: 1;
+        }
+
+        .patient-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: black;
+        }
+
+        .patient-details {
+            font-size: 1rem;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .detail-label {
+            display: inline-block;
+            width: 60px;
+        }
+
+        .detail-value {
+            display: inline-block;
+        }
+
+        .confirmation-buttons {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+
+</head>
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a asp-controller="Home" asp-action="Index" class="brand-logo">
+                <img class="logo-abbr" src="~/images/pngwing.com.png" style="max-width:55px;" alt="">
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <div class="header-content">
+                <nav class="navbar navbar-expand">
+                    <div class="collapse navbar-collapse justify-content-between">
+                        <div class="header-left">
+                            <div class="search_bar dropdown">
+                                <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
+                                    <i class="mdi mdi-magnify"></i>
+                                </span>
+                                <div class="dropdown-menu p-0 m-0">
+                                    <form>
+                                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="navbar-nav header-right">
+                            @*<li class="nav-item dropdown notification_dropdown">
+                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                                    <i class="mdi mdi-bell"></i>
+                                    <div class="pulse-css"></div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <ul class="list-unstyled">
+                                        <li class="media dropdown-item">
+                                            <span class="success"><i class="ti-user"></i></span>
+                                            <div class="media-body">
+                                                <a href="#">
+                                                    <p>
+                                                        <strong>Martin</strong> has added a <strong>customer</strong> Successfully
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                        <li class="media dropdown-item">
+                                            <span class="primary"><i class="ti-shopping-cart"></i></span>
+                                            <div class="media-body">
+                                                <a href="#">
+                                                    <p><strong>Jennifer</strong> purchased Light Dashboard 2.0.</p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                        <li class="media dropdown-item">
+                                            <span class="danger"><i class="ti-bookmark"></i></span>
+                                            <div class="media-body">
+                                                <a href="#">
+                                                    <p>
+                                                        <strong>Robin</strong> marked a <strong>ticket</strong> as unsolved.
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                        <li class="media dropdown-item">
+                                            <span class="primary"><i class="ti-heart"></i></span>
+                                            <div class="media-body">
+                                                <a href="#">
+                                                    <p><strong>David</strong> purchased Light Dashboard 1.0.</p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                        <li class="media dropdown-item">
+                                            <span class="success"><i class="ti-image"></i></span>
+                                            <div class="media-body">
+                                                <a href="#">
+                                                    <p>
+                                                        <strong> James.</strong> has added a<strong>customer</strong> Successfully
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                    </ul>
+                                    <a class="all-notification" href="#">
+                                        See all notifications <i class="ti-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </li>*@
+                            <li class="nav-item dropdown header-profile">
+                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                                    <i class="mdi mdi-account"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Moderator") || User.IsInRole("Doctor"))
+                                    {
+                                        <a asp-controller="Users" asp-action="Details" class="dropdown-item">
+                                            <i class="icon-user"></i>
+                                            <span class="ml-2">@User.Identity.Name</span>
+                                        </a>
+                                        <a asp-controller="Account" asp-action="LogOut" class="dropdown-item">
+                                            <i class="icon-key"></i>
+                                            <span class="ml-2">Logout </span>
+                                        </a>
+                                    }
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="quixnav">
+            <div class="quixnav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label first">Main Menu</li>
+                    <!-- <li><a href="index.html"><i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
+                    </li> -->
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="./index.html">Dashboard 1</a></li>
+                            <li><a href="./index2.html">Dashboard 2</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-label">Əsas</li>
+                    <li class="mb-2">
+                        <a class="has-arrow" aria-expanded="false">
+                            <i class="ti-wheelchair"></i><span class="nav-text">Xəstələr</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a asp-controller="Patient" asp-action="Index">Xəstələrin siyahısı</a></li>
+                            <li><a asp-controller="Patient" asp-action="Create">Xəstə əlavə etmək</a></li>
+                        </ul>
+                    </li>
+                    <li class="mb-2">
+                        <a class="has-arrow" aria-expanded="false">
+                            <i class="fa-solid fa-building"></i><span class="nav-text">Şöbələr</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a asp-controller="Department" asp-action="Index">Şöbələrin siyahısı</a></li>
+                            <li><a asp-controller="Department" asp-action="Create">Şöbə yaratmaq</a></li>
+                        </ul>
+                    </li>
+                    <li class="mb-2">
+                        <a class="has-arrow" aria-expanded="false">
+                            <i class="fa-solid fa-user-doctor"></i><span class="nav-text">Həkimlər</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a asp-controller="Doctor" asp-action="Index">Həkimlərin siyahısı</a></li>
+                            <li><a asp-controller="Doctor" asp-action="Create">Həkim əlavə etmək</a></li>
+                        </ul>
+                    </li>
+                    <li class="mb-2">
+                        <a class="has-arrow" aria-expanded="false">
+                            <i class="fa-solid fa-calendar-check"></i><span class="nav-text">Rezervlər</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a asp-controller="Appointment" asp-action="Index">Rezervlərin siyahısı</a></li>
+                            <li><a asp-controller="Appointment" asp-action="Create">Rezerv əlavə etmək</a></li>
+                        </ul>
+                    </li>
+                    <li class="mb-2">
+                        <a class="has-arrow" aria-expanded="false">
+                            <i class="fa-solid fa-user-tie"></i><span class="nav-text">İşçilər</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a asp-controller="Staff" asp-action="Index">İşçilərin siyahısı</a></li>
+                            <li><a asp-controller="Staff" asp-action="Create">İşçi əlavə etmək</a></li>
+                        </ul>
+                    </li>
+                    <li class="mb-2">
+                        <a class="has-arrow" aria-expanded="false">
+                            <i class="fa-solid fa-bed"></i><span class="nav-text">Otaq Təyinatı</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a asp-controller="Room" asp-action="Index">Otaqlar siyahısı</a></li>
+                            <li><a asp-controller="Room" asp-action="Create">Otaq təyinatı əlavə etmək</a></li>
+                        </ul>
+                    </li>
+                    <li class="mb-2">
+                        <a class="has-arrow" aria-expanded="false">
+                            <i class="fa-solid fa-money-bill"></i><span class="nav-text">Gəlirlər</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a asp-controller="Room" asp-action="Index">Gəlirlərin siyahısı</a></li>
+                            <li><a asp-controller="Room" asp-action="Create">Otaq təyinatı əlavə etmək</a></li>
+                        </ul>
+                    </li>
+                    <li class="mb-2">
+                        <a aria-expanded="false" asp-controller="Users" asp-action="Index">
+                            <i class="fa-solid fa-users"></i><span class="nav-text">Hesablar</span>
+                        </a>
+                    </li>
+
+                    @*<li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="icon icon-chart-bar-33"></i><span class="nav-text">Charts</span>
+                    </a>
+                    <ul aria-expanded="false">
+                    <li><a href="./chart-flot.html">Flot</a></li>
+                    <li><a href="./chart-morris.html">Morris</a></li>
+                    <li><a href="./chart-chartjs.html">Chartjs</a></li>
+                    <li><a href="./chart-chartist.html">Chartist</a></li>
+                    <li><a href="./chart-sparkline.html">Sparkline</a></li>
+                    <li><a href="./chart-peity.html">Peity</a></li>
+                    </ul>
+                    </li>*@
+
+
+
+                    @*<li class="nav-label">Components</li>
+                    <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="icon icon-world-2"></i><span class="nav-text">Bootstrap</span>
+                    </a>
+                    <ul aria-expanded="false">
+                    <li><a href="./ui-accordion.html">Accordion</a></li>
+                    <li><a href="./ui-alert.html">Alert</a></li>
+                    <li><a href="./ui-badge.html">Badge</a></li>
+                    <li><a href="./ui-button.html">Button</a></li>
+                    <li><a href="./ui-modal.html">Modal</a></li>
+                    <li><a href="./ui-button-group.html">Button Group</a></li>
+                    <li><a href="./ui-list-group.html">List Group</a></li>
+                    <li><a href="./ui-media-object mr-3.html">Media Object</a></li>
+                    <li><a href="./ui-card.html">Cards</a></li>
+                    <li><a href="./ui-carousel.html">Carousel</a></li>
+                    <li><a href="./ui-dropdown.html">Dropdown</a></li>
+                    <li><a href="./ui-popover.html">Popover</a></li>
+                    <li><a href="./ui-progressbar.html">Progressbar</a></li>
+                    <li><a href="./ui-tab.html">Tab</a></li>
+                    <li><a href="./ui-typography.html">Typography</a></li>
+                    <li><a href="./ui-pagination.html">Pagination</a></li>
+                    <li><a href="./ui-grid.html">Grid</a></li>
+
+                    </ul>
+                    </li>
+
+                    <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="icon icon-plug"></i><span class="nav-text">Plugins</span>
+                    </a>
+                    <ul aria-expanded="false">
+                    <li><a href="./uc-select2.html">Select 2</a></li>
+                    <li><a href="./uc-nestable.html">Nestedable</a></li>
+                    <li><a href="./uc-noui-slider.html">Noui Slider</a></li>
+                    <li><a href="./uc-sweetalert.html">Sweet Alert</a></li>
+                    <li><a href="./uc-toastr.html">Toastr</a></li>
+                    <li><a href="./map-jqvmap.html">Jqv Map</a></li>
+                    </ul>
+                    </li>
+                    <li>
+                    <a href="widget-basic.html" aria-expanded="false">
+                    <i class="icon icon-globe-2"></i><span class="nav-text">Widget</span>
+                    </a>
+                    </li>
+                    <li class="nav-label">Forms</li>
+                    <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="icon icon-form"></i><span class="nav-text">Forms</span>
+                    </a>
+                    <ul aria-expanded="false">
+                    <li><a href="./form-element.html">Form Elements</a></li>
+                    <li><a href="./form-wizard.html">Wizard</a></li>
+                    <li><a href="./form-editor-summernote.html">Summernote</a></li>
+                    <li><a href="form-pickers.html">Pickers</a></li>
+                    <li><a href="form-validation-jquery.html">Jquery Validate</a></li>
+                    </ul>
+                    </li>
+                    <li class="nav-label">Table</li>
+                    <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="icon icon-layout-25"></i><span class="nav-text">Table</span>
+                    </a>
+                    <ul aria-expanded="false">
+                    <li><a href="table-bootstrap-basic.html">Bootstrap</a></li>
+                    <li><a href="table-datatable-basic.html">Datatable</a></li>
+                    </ul>
+                    </li>
+
+                    <li class="nav-label">Extra</li>
+                    <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="icon icon-single-copy-06"></i><span class="nav-text">Pages</span>
+                    </a>
+                    <ul aria-expanded="false">
+                    <li><a href="./page-register.html">Register</a></li>
+                    <li><a href="./page-login.html">Login</a></li>
+                    <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
+                    <ul aria-expanded="false">
+                    <li><a href="./page-error-400.html">Error 400</a></li>
+                    <li><a href="./page-error-403.html">Error 403</a></li>
+                    <li><a href="./page-error-404.html">Error 404</a></li>
+                    <li><a href="./page-error-500.html">Error 500</a></li>
+                    <li><a href="./page-error-503.html">Error 503</a></li>
+                    </ul>
+                    </li>
+                    <li><a href="./page-lock-screen.html">Lock Screen</a></li>
+                    </ul>
+                    </li>*@
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+        <div class="content-body" style="min-height: 924px;">
+            <div class="container-fluid">
+                @RenderBody()
+
+            </div>
+        </div>
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Developed by <a href="https://github.com/ehmedosmanov" target="_blank">Axmed</a> 2023</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+        <!--**********************************
+           Support ticket button start
+        ***********************************-->
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="~/vendor/global/global.min.js"></script>
+    <script src="~/js/quixnav-init.js"></script>
+    <script src="~/js/custom.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    @RenderSection("Scripts", false)
+    <script src="~/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <!-- Form validate init -->
+    <script src="~/js/plugins-init/jquery.validate-init.js"></script>
+    <script src="~/vendor/chartist/js/chartist.min.js"></script>
+
+    <script src="~/vendor/moment/moment.min.js"></script>
+    <script src="~/vendor/pg-calendar/js/pignose.calendar.min.js"></script>
+
+
+    <script src="~/js/dashboard/dashboard-2.js"></script>
+    <!-- Circle progress -->
+
+</body>
+
+</html>

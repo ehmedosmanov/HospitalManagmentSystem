@@ -1,0 +1,58 @@
+﻿@model List<Staff>
+
+@await Component.InvokeAsync("PageTitle", new { pageTitle = "İşçilərin siyahısı", breadcrumbs = new[] { "İşçilər" } })
+
+<!-- row -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">İşçilərin siyahısı</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="dataTable" class="display" style="min-width: 845px">
+                        <thead>
+                            <tr>
+                                <th>Şəkil</th>
+                                <th>Ad Soyad</th>
+                                <th>Yaş</th>
+                                <th>Telefon Nömrə</th>
+                                <th>Şöbə</th>
+                                <th>İş/Vəzifə</th>
+                                <th>Əməliyyatlar</th>
+                            </tr>
+                        </thead>
+                        <tbody class="black-text">
+                            @foreach (Staff staff in Model)
+                            {
+                                <tr>
+                                    <td><img style="width:80px; border-radius:100%; object-fit:cover;" src="~/images/people/@staff.Img" alt="Xəstənin şəkli" class="img-thumbnail"></td>
+                                    <td>@($"{staff.FirstName} {staff.LastName}")</td>
+                                    <td>@(DateTime.Today.Year - staff.DateOfBirth.Year - (DateTime.Today < staff.DateOfBirth.AddYears(DateTime.Today.Year - staff.DateOfBirth.Year) ? 1 : 0))</td>                                 
+                                    <td>@staff.PhoneNumber</td>
+                                    <td>@staff.Department.Name</td>
+                                    <td>@staff.Designation</td>
+                                    <td>
+                                        <a asp-action="Detail" asp-route-id="@staff.Id"><i class="fa fa-eye fa-lg" style="font-size:1.4rem;"></i></a>
+                                        <a asp-action="Update" asp-route-id="@staff.Id"><i class="fa fa-pencil color-muted fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@staff.Id"><i class="ti-trash color-danger fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $("#dataTable").DataTable();
+    </script>
+}

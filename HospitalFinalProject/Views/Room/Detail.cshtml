@@ -1,0 +1,28 @@
+﻿@model RoomAllotment
+
+@await Component.InvokeAsync("PageTitle", new { pageTitle = "Otaq Təyinatı Detallar", breadcrumbs = new[] { "Otaq Təyinatı", "Detallar" } })
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Detallar</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="~/images/people/@Model.Patient.Img" alt="Pasiyentin Şəkli" class="img-fluid rounded-circle" style="object-fit:cover;">
+            </div>
+            <div class="col-md-8 text-dark">
+                <h5 class="card-title">@($"{Model.Patient.FirstName} {Model.Patient.LastName}") </h5>
+                <p class="card-text"><strong>Cins:</strong> @Model.Patient.Gender</p>
+                <p class="card-text"><strong>Otaq nömrəsi:</strong> @Model.Patient.Gender</p>
+                <p class="card-text"><strong>Otaqın tipi:</strong> @Model.RoomType.Name</p>
+                <p class="card-text"><strong>Qeydiyyat Tarixi:</strong> @Model.AllotmentDate</p>
+                <p class="card-text"><strong>Buraaxılış Tarixi:</strong> @Model.DischargeDate</p>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a asp-action="Index" class="btn btn-primary">Siyahıya qayıt</a>
+    </div>
+</div>

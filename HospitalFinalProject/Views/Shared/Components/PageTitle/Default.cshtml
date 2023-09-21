@@ -1,0 +1,41 @@
+﻿<div class="row page-titles mx-0">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4 class="mb-1">@ViewBag.PageTitle</h4>
+            @if (ViewBag.Breadcrumbs != null)
+            {
+                <span class="ml-1">
+                    @for (int i = 0; i < ViewBag.Breadcrumbs.Length; i++)
+                    {
+                        <span class="breadcrumb-item">@ViewBag.Breadcrumbs[i]</span>
+                        @if (i < ViewBag.Breadcrumbs.Length - 1)
+                        {
+                            <i class="ti-angle-right"></i>
+                        }
+                    }
+                </span>
+            }
+        </div>
+    </div>
+    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index"><i class="ti-home"></i></a></li>
+            @if (ViewBag.Breadcrumbs != null)
+            {
+                @for (int i = 0; i < ViewBag.Breadcrumbs.Length; i++)
+                {
+                    <li class="breadcrumb-item">
+                        @if (i < ViewBag.Breadcrumbs.Length - 1)
+                        {
+                            <a>@ViewBag.Breadcrumbs[i]</a>
+                        }
+                        else
+                        {
+                            @ViewBag.Breadcrumbs[i]
+                        }
+                    </li>
+                }
+            }
+        </ol>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@model List<Doctor>
+
+@foreach (Doctor doctor in Model)
+{
+    <tr>
+        <td><img style="width:100px; height:100px; border-radius:100%; object-fit:cover;" src="~/images/people/@doctor.Img" alt="Həkimin şəkli" class="img-thumbnail"></td>
+        <td>@($"{doctor.FirstName} {doctor.LastName}")</td>
+        <td>@doctor.Department.Name</td>
+        <td>@doctor.Specialization</td>
+        <td>@doctor.Experience</td>
+        <td>@doctor.PhoneNumber</td>
+        <td>@doctor.Email</td>
+        <td>
+            @if (doctor.DoctorStatusId == 1)
+            {
+                <span class="badge badge-warning text-white">@doctor.DoctorStatus.Name</span>
+            }
+            else if (doctor.DoctorStatusId == 2)
+            {
+                <span class="badge badge-success text-white">@doctor.DoctorStatus.Name</span>
+            }
+            else
+            {
+                <span class="badge">@doctor.DoctorStatus.Name</span>
+            }
+        </td>
+        <td>
+            <a asp-action="Detail" asp-route-id="@doctor.Id"><i class="fa fa-eye fa-lg" style="font-size:1.4rem;"></i></a>
+            <a asp-action="Update" asp-route-id="@doctor.Id"><i class="fa fa-pencil color-muted fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+            <a asp-action="Delete" asp-route-id="@doctor.Id"><i class="fa fa-close color-danger fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+        </td>
+    </tr>
+}

@@ -1,0 +1,13 @@
+﻿@foreach (Doctor doc in ViewBag.Doctors)
+{
+    @if(ViewBag.Doctors.Count == 0)
+    {
+        <option value="0">Şöbə müdiri yoxdur</option>
+
+    }
+    else
+    {
+        <option value="@doc.Id">@doc.FirstName @doc.LastName</option>
+
+    }
+}

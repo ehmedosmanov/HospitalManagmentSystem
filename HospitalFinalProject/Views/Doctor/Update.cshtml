@@ -1,0 +1,332 @@
+﻿@model Doctor
+
+@await Component.InvokeAsync("PageTitle", new { pageTitle = "Həkimlərin siyahısı", breadcrumbs = new[] { "Həkimlər", "Həkim məlumat yeniləmək" } })
+
+<!-- row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Həkimi əlavə edin</h4>
+            </div>
+            <div class="card-body">
+                <div class="form-validation">
+                    <form class="form-valide" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Şəkil</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <div class="custom-file">
+                                            <div class="custom-file">
+                                                <input class="custom-file-input mb-2" asp-for="Photo">
+                                                <span asp-validation-for="Photo" class="text-danger mt-2"></span>
+                                                <label class="custom-file-label">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Ad</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="FirstName" placeholder="Həkimnin Adı..">
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Soyad</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="LastName" placeholder="Həkimnin Soyadı..">
+                                        <span asp-validation-for="LastName" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Doğum Tarix</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" placeholder="dd/mm/yyyy" asp-for="DateOfBirth">
+                                        <span asp-validation-for="DateOfBirth" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Ünvan</strong> <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <textarea class="form-control mb-2" asp-for="Address" rows="5" placeholder="Həkimnin Yaşadığı Ünvanı.."></textarea>
+                                        <span asp-validation-for="Address" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Nömrə</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="PhoneNumber" placeholder="Həkimnin Nömrəsi..">
+                                        <span asp-validation-for="PhoneNumber" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>
+                                            Email
+                                        </strong> <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="Email" placeholder="Həkimnin E-poçtu..">
+                                        <span asp-validation-for="Email" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>
+                                            Maaş
+                                        </strong> <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="Amount" placeholder="Həkimnin Maaşı..">
+                                        <span asp-validation-for="Amount" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Сins</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <select class="form-control mb-2" asp-for="Gender" asp-items="Html.GetEnumSelectList<Helper.Gender>()">
+                                            <option value="">Cinsi seçin</option>
+                                        </select>
+                                        <span asp-validation-for="Gender" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>
+                                            İxtisas
+                                        </strong> <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="Specialization" placeholder="Həkimin İxtisası..">
+                                        <span asp-validation-for="Specialization" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>
+                                            Təcrübə
+                                        </strong> <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="Experience" placeholder="Təcübə ili..">
+                                        <span asp-validation-for="Experience" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Şöbə</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <div class="col-lg-6" id="departmentSelectContainer">
+                                        @if (ViewBag.Departments != null)
+                                        {
+                                            <select class="form-control mb-2" name="departmentId" id="departmentId">
+                                                @if (ViewBag.Departments.Count == 0)
+                                                {
+                                                    <option value="0">Hamısı doludur</option>
+
+                                                }
+                                                @foreach (Department department in ViewBag.Departments)
+                                                {
+                                                    if (Model.DepartmentId == department.Id)
+                                                    {
+                                                        <option selected value="@department.Id">@department.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@department.Id">@department.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                            <span asp-validation-for="DepartmentId" class="text-danger mt-2"></span>
+                                        }
+                                        else
+                                        {
+                                            <p>Şöbə seçmək mövcüd deyil</p>
+                                        }
+                                        <span asp-validation-for="Department" class="text-danger mt-2"></span>
+                                    </div>
+
+                                </div>
+
+
+                                
+                                    <div class="form-group" id="isHeadDiv">
+                                        <div class="form-check">
+                                            <input class="form-check-input" asp-for="IsHead" type="checkbox" name="isHead">
+                                            <label class="form-check-label text-black" asp-for="IsHead">
+                                                Şöbə müdürü olacacaq?
+                                            </label>
+                                            <span asp-validation-for="IsHead" class="text-danger mt-2"></span>
+                                        </div>
+                                    </div>
+                                    
+                                
+
+                                <div class="form-group row" id="superVisor">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Rəhbər</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <div class="col-lg-6">
+                                        <select class="form-control" name="supervisorId" id="regDoctorId">
+                                            <option value="">-- Rəhbər həkim seçin --</option>
+                                            @foreach (Doctor doctor in ViewBag.Doctors)
+                                            {
+                                                @if(Model.SupervisorId == doctor.Id)
+                                                {
+                                                    <option selected value="@doctor.Id">@($"{doctor.FirstName} {doctor.LastName}")</option>
+
+                                                }
+                                                else
+                                                {
+                                                    <option value="@doctor.Id">@($"{doctor.FirstName} {doctor.LastName}")</option>
+
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Status</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <div class="col-lg-6">
+                                        <select class="form-control mb-2" name="doctorStatusId">
+                                            @foreach (DoctorStatus doctorStatus in ViewBag.DoctorStatuses)
+                                            {
+                                                if (Model.DoctorStatusId == doctorStatus.Id)
+                                                {
+                                                    <option selected value="@doctorStatus.Id">@doctorStatus.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@doctorStatus.Id">@doctorStatus.Name</option>
+                                                }
+                                            }
+                                        </select>
+                                        <span asp-validation-for="DoctorStatus" class="text-danger mt-2"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Həkimin Təhsili</strong> <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-12 mt-3">
+                                        <textarea class="form-control mb-2" rows="12" asp-for="Education" placeholder="Təhsil.."></textarea>
+                                        <span asp-validation-for="Education" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mr-2">
+                            <button type="submit" class="btn btn-primary mr-2">Təstid et</button>
+                            <a asp-action="Index" class="btn btn-light">Ləğv et</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#Education'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script>
+        function toggleRehber(isHeadChecked) {
+            if (isHeadChecked) {
+                $("#regDoctorId").prop("disabled", true).val('');
+                $("#superVisor").addClass("d-none");
+            } else {
+                $("#regDoctorId").prop("disabled", false);
+                $("#superVisor").removeClass("d-none");
+            }
+        }
+
+        $(document).ready(function () {
+            toggleRehber($("#IsHead").prop("checked"));
+
+            $("#IsHead").change(function () {
+                var isHeadChecked = $(this).prop("checked");
+                toggleRehber(isHeadChecked);
+                 var currentDepartmentId = $("#departmentId").val();
+                $.ajax({
+                    url: "/Doctor/UpdateDepartments",
+                    type: "GET",
+                    data: { isHeadChecked: isHeadChecked },
+                    success: function (data) {
+                        $("#departmentSelectContainer").html(data);
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+            });
+
+        });
+    </script>
+    <script>
+        $(document).on("change", "#departmentId", function () {
+            $.ajax({
+                url: "/Doctor/GetRegularDoctors/",
+                type: "GET",
+                data: {
+                    "departmentId": $("#departmentId").val()
+                },
+                success: function (res) {
+                    $("#regDoctorId").empty()
+                    $("#regDoctorId").append(res)
+                    console.log(res)
+                }
+            });
+        });
+    </script>
+
+
+}

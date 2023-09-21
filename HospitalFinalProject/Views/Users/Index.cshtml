@@ -1,0 +1,77 @@
+﻿@model List<UserVM>
+
+@await Component.InvokeAsync("PageTitle", new { pageTitle = "Hesabların siyahısı", breadcrumbs = new[] { "Hesablar" } })
+
+<!-- row -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Hesabların siyahısı</h4>
+                <a asp-action="Create" class="btn btn-primary"><i class="fa-solid fa-user-plus mr-2"></i></a>
+
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="dataTable" class="display" style="min-width: 845px">
+                        <thead>
+                            <tr>
+                                <th>Ad & Soyad</th>
+                                <th>İstifadəçi adı</th>
+                                <th>Cinsi</th>
+                                <th>Email</th>
+                                <th>Rolu</th>
+                                <th>Status</th>
+                                <th>Əməliyyatlar</th>
+                            </tr>
+                        </thead>
+                        <tbody class="black-text">
+                            @foreach (UserVM user in Model)
+                            {
+                                <tr>
+                                    <td>@($"{user.Name} {user.Surname}")</td>
+                                    <td>@user.Username</td>
+                                    <td>@user.Gender</td>
+                                    <td>@user.Email</td>
+                                    <td>@user.Role</td>
+                                    <td>
+                                        @if (user.IsDeactive)
+                                        {
+                                            <span class="badge badge-danger text-white">Deaktiv</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-success text-white">Aktiv</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-action="Detail" asp-route-id="@user.Id"><i class="fa fa-eye fa-lg" style="font-size:1.4rem;"></i></a>
+                                        <a asp-action="Update" asp-route-id="@user.Id"><i class="fa fa-pencil color-muted fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@user.Id"><i class="ti-trash color-danger fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable()
+        });
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+}

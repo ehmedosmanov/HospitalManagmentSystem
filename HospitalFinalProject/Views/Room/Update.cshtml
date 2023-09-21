@@ -1,0 +1,117 @@
+﻿@model RoomAllotment
+
+@await Component.InvokeAsync("PageTitle", new { pageTitle = "Otaqı Yeniləmk", breadcrumbs = new[] { "Otaqlar siyahısı", "Otaqı yeniləmək" } })
+
+<!-- row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Otaqı yeniləmək</h4>
+                <div asp-validation-summary="All" class="text-danger"></div>
+            </div>
+            <div class="card-body">
+                <div class="form-validation">
+                    <form class="form-valide" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Pasiyent</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <div class="col-lg-6">
+                                        <select class="form-control" name="patientId">
+                                            @foreach (Patient patient in ViewBag.Patients)
+                                            {
+                                                @if (Model.PatientId == patient.Id)
+                                                {
+                                                    <option selected value="@patient.Id">@($"{patient.FirstName} {patient.LastName}")</option>
+
+                                                }
+                                                else
+                                                {
+                                                    <option value="@patient.Id">@($"{patient.FirstName} {patient.LastName}")</option>
+
+                                                }
+                                            }
+                                        </select>
+                                        <span class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Otağın nömrəsi</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="RoomNo">
+                                        <span asp-validation-for="RoomNo" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Otağın tipi</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <select class="form-control" name="typeId">
+                                            @foreach (RoomType type in ViewBag.RoomTypes)
+                                            {
+                                                @if(Model.RoomTypeId == type.Id)
+                                                {
+                                                    <option selected value="@type.Id">@type.Name</option>
+
+                                                }
+                                                else
+                                                {
+                                                    <option value="@type.Id">@type.Name</option>
+
+                                                }
+                                            }
+                                        </select>
+                                        <span class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Qeydiyyat Tarixi</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="AllotmentDate">
+                                        <span asp-validation-for="AllotmentDate" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Buraxılış Tarixi</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="DischargeDate">
+                                        <span asp-validation-for="DischargeDate" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-end mr-2">
+                            <button type="submit" class="btn btn-primary mr-2">Təstid et</button>
+                            <a asp-action="Index" class="btn btn-light">Ləğv et</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+}   

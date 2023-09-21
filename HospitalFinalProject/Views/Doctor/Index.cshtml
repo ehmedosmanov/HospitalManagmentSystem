@@ -1,0 +1,137 @@
+﻿@model List<Doctor>
+
+@await Component.InvokeAsync("PageTitle", new { pageTitle = "Həkimlərin siyahısı", breadcrumbs = new[] { "Həkimlər" } })
+
+<!-- row -->
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-body">
+                <form id="filterForm">
+                    <div class="row d-flex" st>
+                        <div class="form-group col-md-4">
+                            <label for="departmentFilter">Şöbəni seçin:</label>
+                            <select id="departmentFilter" class="form-control">
+                                <option value="">Bütün şöbələr</option>
+                                @foreach (Department department in ViewBag.Departments)
+                                {
+                                    <option value="@department.Id">@department.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4"
+                             style="display: flex;
+                             align-items: center;
+                             margin-top: 25px;">
+                            <button type="submit" class="btn btn-primary">Təsdiq et</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Həkimlərin siyahısı</h4>
+                <a asp-action="Create" class="btn btn-primary"><i class="fa-solid fa-user-plus mr-2"></i>Doktor əlavə edin</a>
+            </div>
+            <div class="card-body mt-3">
+                <div class="table-responsive">
+                    <table id="dataTable" class="display" style="min-width: 845px">
+                        <thead>
+                            <tr>
+                                <th>Şəkil</th>
+                                <th>Ad Soyad</th>
+                                <th>Şöbə</th>
+                                <th>İxtisas</th>
+                                <th>Vəzifə</th>
+                                <th>Telefon Nömrə</th>
+                                <th>Status</th>
+                                <th>Əməliyyatlar</th>
+                            </tr>
+                        </thead>
+                        <tbody class="black-text">
+                            @foreach (Doctor doctor in Model)
+                            {
+                                <tr>
+                                    <td><img style="width:80px; height:80px; border-radius:100%; object-fit:cover;" src="~/images/people/@doctor.Img" alt="Həkimin şəkli"></td>
+                                    <td>@($"{doctor.FirstName} {doctor.LastName}")</td>
+                                    @if (doctor != null && doctor.Department != null)
+                                    {
+                                        <td>@doctor.Department.Name</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Нет данных</td>
+                                    }
+                                    <td>@doctor.Specialization</td>
+                                    <td>
+                                        @if(doctor.IsHead)
+                                        {
+                                            <label>Şöbə müdir</label>
+                                        }
+                                        else
+                                        {
+                                            
+                                            <label>Həkim</label>
+                                        }
+                                    </td>
+                                    <td>@doctor.PhoneNumber</td>
+                                    <td>
+                                        @if (doctor.DoctorStatusId == 1)
+                                        {
+                                            <span class="badge badge-success text-white">@doctor.DoctorStatus.Name</span>
+                                        }
+                                        else if (doctor.DoctorStatusId == 2)
+                                        {
+                                            <span class="badge badge-warning text-white">@doctor.DoctorStatus.Name</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge">@doctor.DoctorStatus.Name</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-action="Detail" asp-route-id="@doctor.Id"><i class="fa fa-eye fa-lg" style="font-size:1.4rem;"></i></a>
+                                        <a asp-action="Update" asp-route-id="@doctor.Id"><i class="fa fa-pencil color-muted fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@doctor.Id"><i class="ti-trash color-danger fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $("#dataTable").DataTable();
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#filterForm").submit(function (event) {
+                event.preventDefault(); 
+                var selectedDepartmentId = $("#departmentFilter").val();
+                $.ajax({
+                    url: '/Doctor/Filter',
+                    type: 'GET',
+                    data: { 
+                        departmentId: selectedDepartmentId 
+                    }, 
+                    success: function (data) {
+                        $("#dataTable tbody").html(data);
+                    }   
+                });
+            });
+        });
+    </script>
+}

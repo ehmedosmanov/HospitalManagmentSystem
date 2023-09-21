@@ -1,0 +1,30 @@
+﻿@model Patient
+
+@await Component.InvokeAsync("PageTitle", new { pageTitle = "Xəstənin məlumatları", breadcrumbs = new[] { "Xəstələr", "Xəstənin məlumatları" } })
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Xəstənin məlumatları</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="~/images/people/@Model.Img" alt="Xəstənin Şəkli" class="img-fluid rounded-circle" style="object-fit:cover;">
+            </div>
+            <div class="col-md-8 text-dark">
+                <h5 class="card-title">@($"{Model.FirstName} {Model.LastName}") </h5>
+                <p class="card-text"><strong>Yaş:</strong>@(DateTime.Today.Year - Model.DateOfBirth.Year - (DateTime.Today < Model.DateOfBirth.AddYears(DateTime.Today.Year - Model.DateOfBirth.Year) ? 1 : 0))</p>
+                <p class="card-text"><strong>Cins:</strong> @Model.Gender</p>
+                <p class="card-text"><strong>Ünvan:</strong> @Model.Address</p>
+                <p class="card-text"><strong>Telefon Nömrəsi:</strong> @Model.PhoneNumber</p>
+                <p class="card-text"><strong>Email:</strong> @Model.Email</p>
+                <p class="card-text"><strong>Qan Qrupu:</strong> @Model.BloodGroup.GroupName</p>
+                <p class="card-text"><strong>Status:</strong> @Model.PatientStatus.Name</p>
+                <p class="card-text"><strong>Son Ziyarət:</strong> @Model.LastVisit.ToString("dd/MM/yyyy")</p>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a asp-action="Index" class="btn btn-primary">Siyahıya qayıt</a>
+    </div>
+</div>

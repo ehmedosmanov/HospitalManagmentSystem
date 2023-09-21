@@ -1,0 +1,81 @@
+﻿@model List<Department>
+
+@await Component.InvokeAsync("PageTitle", new { pageTitle = "Şöbələrin siyahısı", breadcrumbs = new[] { "Şöbələr" } })
+
+<!-- row -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Şöbələrin siyahıs</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="dataTable" class="display" style="min-width: 845px">
+                        <thead>
+                            <tr>
+                                <th>Şöbə adı</th>
+                                <th>Şöbə müdiri</th>
+                                <th>Yaranma Tarixi</th>
+                                <th>Status</th>
+                                <th>Əməliyyatlar</th>
+                            </tr>
+                        </thead>
+                        <tbody class="black-text">
+                            @foreach (Department department in Model)
+                            {
+                                <tr>                                 
+                                    <td>@department.Name</td>
+                                    <td>
+                                        @if (department.HeadDoctor != null)
+                                        {
+                                            @department.HeadDoctor.FirstName
+                                        }
+                                        else
+                                        {
+                                            <label>Yoxdur</label>
+                                        }
+                                    </td>
+                                    <td>@department.DepartmentDate.ToString("dd/MM/yyyy")</td>                         
+                                    <td>
+                                        @if (!department.IsDeactive)
+                                        {
+                                            <div class="badge badge-success text-white">Active</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="badge badge-danger text-white">Deactive</div>
+
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-action="Detail" asp-route-id="@department.Id"><i class="fa fa-eye fa-lg" style="font-size:1.4rem;"></i></a>
+                                        <a asp-action="Update" asp-route-id="@department.Id"><i class="fa fa-pencil color-muted fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+                                        @if(!department.IsDeactive)
+                                        {
+                                            <a asp-action="Activity" asp-route-id="@department.Id"><i class="fa-solid fa-xmark fa-lg color-danger ml-2" style="font-size:1.4rem;"></i></a>
+
+                                        }
+                                        else
+                                        {
+                                            <a asp-action="Activity" asp-route-id="@department.Id"><i class="fa-solid fa-check fa-lg color-danger ml-2" style="font-size:1.4rem;"></i></a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $("#dataTable").DataTable();
+    </script>
+}

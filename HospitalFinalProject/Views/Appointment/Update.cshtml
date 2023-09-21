@@ -1,0 +1,148 @@
+﻿@model Appointment
+
+@await Component.InvokeAsync("PageTitle", new { pageTitle = "Rezervlərinn yeniləmək", breadcrumbs = new[] { "Rezervlər", "Rezerv yeniləmək" } })
+
+<!-- row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Rezerv əlavə edin</h4>
+            </div>
+            <div class="card-body">
+                <div class="form-validation">
+                    <form class="form-valide" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group row" >
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Xəstə</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <div class="col-lg-6">
+                                        <select asp-for="PatientId" class="form-control" name="patientId">
+                                            <option value="">-- Xəstəni həkim seçin --</option>
+                                            @foreach (Patient patient in ViewBag.Patients)
+                                            {
+                                                @if(Model.PatientId == patient.Id)
+                                                {
+                                                    
+                                                    <option selected value="@patient.Id">@($"{patient.FirstName} {patient.LastName}")</option>
+                                                }
+                                                else
+                                                {
+
+                                                    <option value="@patient.Id">@($"{patient.FirstName} {patient.LastName}")</option>
+                                                }
+
+                                            }
+                                        </select>
+                                        <span asp-validation-for="PatientId" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Həkim</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <select asp-for="DoctorId" class="form-control" name="doctorId">
+                                            <option value="">-- Həkimi həkim seçin --</option>
+                                            @foreach (Doctor doctor in ViewBag.Doctors)
+                                            {
+                                                @if(Model.DoctorId == doctor.Id)
+                                                {
+                                                    <option selected value="@doctor.Id">@($"{doctor.FirstName} {doctor.LastName}")</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@doctor.Id">@($"{doctor.FirstName} {doctor.LastName}")</option>
+                                                }
+
+                                            }
+                                        </select>
+                                        <span asp-validation-for="DoctorId" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                               <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Rezerv Tarixi</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="DateOfAppointment">
+                                        <span asp-validation-for="DateOfAppointment" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Rezerv Başlama vaxtı</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2"  asp-for="From">
+                                        <span asp-validation-for="From" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Rezerv Bitmə vaxtı</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="To">
+                                        <span asp-validation-for="To" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Zədə/Xəstəliy</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="InjuryCondition" placeholder="Zədə..">
+                                        <span asp-validation-for="InjuryCondition" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Zədə və yaxud Xəstəliy haqqında məlumat</strong> <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-12 mt-3">
+                                        <textarea class="form-control mb-2" rows="12" asp-for="Notes" placeholder="Zədə haqqında.."></textarea>
+                                        <span asp-validation-for="Notes" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mr-2">
+                            <button type="submit" class="btn btn-primary mr-2">Təstid et</button>
+                            <a asp-action="Index" class="btn btn-light">Ləğv et</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#Notes'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+}   

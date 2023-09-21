@@ -1,0 +1,161 @@
+﻿@model Patient
+
+@await Component.InvokeAsync("PageTitle", new { pageTitle = "Xəstələrin siyahısı", breadcrumbs = new[] { "Xəstələr", "Xəstə əlavə edin" } })
+
+<!-- row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Xəstəni əlavə edin</h4>
+            </div>
+            <div class="card-body">
+                <div class="form-validation">
+                    <form class="form-valide" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Şəkil</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <div class="custom-file">
+                                            <div class="custom-file">
+                                                <input class="custom-file-input mb-2" asp-for="Photo">
+                                                <span asp-validation-for="Photo" class="text-danger mt-2"></span>
+                                                <label class="custom-file-label">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Ad</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="FirstName" placeholder="Xəstənin Adı..">
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Soyad</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="LastName" placeholder="Xəstənin Soyadı..">
+                                        <span asp-validation-for="LastName" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Doğum Tarix</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" placeholder="dd/mm/yyyy" asp-for="DateOfBirth">
+                                        <span asp-validation-for="DateOfBirth" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Ünvan</strong> <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <textarea class="form-control mb-2" asp-for="Address" rows="5" placeholder="Xəstənin Yaşadığı Ünvanı.."></textarea>
+                                        <span asp-validation-for="Address" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Nömrə</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="PhoneNumber" placeholder="Xəstənin Nömrəsi..">
+                                        <span asp-validation-for="PhoneNumber" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>
+                                            Email
+                                        </strong> <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control mb-2" asp-for="Email" placeholder="Xəstənin E-poçtu..">
+                                        <span asp-validation-for="Email" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Сins</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <select class="form-control mb-2" asp-for="Gender" asp-items="Html.GetEnumSelectList<Helper.Gender>()">
+                                            <option value="">Cinsi seçin</option>
+                                        </select>
+                                        <span asp-validation-for="Gender" class="text-danger mt-2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Qan Qrupu</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <select asp-for="BloodGroup" class="form-control mb-2" name="bloodGroupId">
+                                            @foreach (BloodGroup bloodGroup in ViewBag.BloodGroups)
+                                            {
+                                                <option value="@bloodGroup.Id">@bloodGroup.GroupName</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="BloodGroup" class="text-danger mt-2"></span>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row d-none">
+                                    <label class="col-lg-4 col-form-label">
+                                        <strong>Status</strong>
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <div class="col-lg-6">
+                                        <select class="form-control mb-2" name="patientStatusId">
+                                            @foreach (PatientStatus patientStatus in ViewBag.PatientStatuses)
+                                            {
+                                                <option value="@patientStatus.Id">@patientStatus.Name</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="PatientStatus" class="text-danger mt-2"></span>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mr-2">
+                            <button type="submit" class="btn btn-primary mr-2">Təstid et</button>
+                            <a asp-action="Index" class="btn btn-light">Ləğv et</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+                                }

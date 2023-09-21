@@ -1,0 +1,105 @@
+﻿@model List<RoomAllotment>
+
+@await Component.InvokeAsync("PageTitle", new { pageTitle = "Otaq bölgüsü siyahısı", breadcrumbs = new[] { "Otaq bölgüsü" } })
+
+<!-- row -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Otaq bölgüsü siyahısı</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="dataTable" class="display" style="min-width: 845px">
+                        <thead>
+                            <tr>
+                                <th>Pasiyentin şəkli</th>
+                                <th>Pasiyentin adı</th>
+                                <th>Otaq Nömrəsi</th>
+                                <th>Otaqın növü</th>
+                                <th>Cins</th>
+                                <th>Qəbul tarixi</th>
+                                <th>Buraxılış tarixi</th>
+                                <th>Əməliyyatlar</th>
+                            </tr>
+                        </thead>
+                        <tbody class="black-text">
+                            @foreach (RoomAllotment roomAllotment in Model)
+                            {
+                                <tr>
+                                    <td><img style="width:80px; border-radius:100%; object-fit:cover;" src="~/images/people/@roomAllotment.Patient.Img" alt="Pasiyent in şəkli" class="img-thumbnail"></td>
+                                    <td>@($"{roomAllotment.Patient.FirstName} {roomAllotment.Patient.LastName}")</td>
+                                    <td>@roomAllotment.RoomNo</td>
+                                    <td>@roomAllotment.RoomType.Name</td>
+                                    <td>@roomAllotment.Patient.Gender</td>
+                                    <td>
+                                        @{
+                                            if (roomAllotment != null)
+                                            {
+                                                @roomAllotment.AllotmentDate.ToString("d")
+                                            }
+                                            else
+                                            {
+                                                @("N/A")
+
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (roomAllotment != null)
+                                            {
+                                                @roomAllotment.DischargeDate.ToString("d")
+                                            }
+                                            else
+                                            {
+                                                @("N/A")
+
+                                            }
+                                        }
+                                    </td>
+
+
+                                    @*<td>
+                                @if (!department.IsDeactive)
+                                {
+                                <div class="badge badge-success text-white">Active</div>
+                                }
+                                else
+                                {
+                                <div class="badge badge-danger text-white">Deactive</div>
+
+                                }
+                                </td>*@
+                                    <td>
+                                        <a asp-action="Detail" asp-route-id="@roomAllotment.Id"><i class="fa fa-eye fa-lg" style="font-size:1.4rem;"></i></a>
+                                        <a asp-action="Update" asp-route-id="@roomAllotment.Id"><i class="fa fa-pencil color-muted fa-lg ml-2" style="font-size:1.4rem;"></i></a>
+                                        @if (!roomAllotment.IsDeactive)
+                                        {
+                                            <a asp-action="Activity" asp-route-id="@roomAllotment.Id"><i class="fa-solid fa-xmark fa-lg color-danger ml-2" style="font-size:1.4rem;"></i></a>
+
+                                        }
+                                        else
+                                        {
+                                            <a asp-action="Activity" asp-route-id="@roomAllotment.Id"><i class="fa-solid fa-check fa-lg color-danger ml-2" style="font-size:1.4rem;"></i></a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $("#dataTable").DataTable();
+    </script>
+}

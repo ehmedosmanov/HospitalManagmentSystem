@@ -1,0 +1,13 @@
+﻿@model Doctor
+<select asp-for="DepartmentId" class="form-control mb-2" name="departmentId" id="departmentId">
+    @if (ViewBag.Departments.Count == 0)
+    {
+        <option value="0">Hamısı doludur</option>
+        
+    }
+    @foreach (Department department in ViewBag.Departments)
+    {
+        <option value="@department.Id">@department.Name</option>
+    }
+</select>
+<span asp-validation-for="DepartmentId" class="text-danger mt-2"></span>
