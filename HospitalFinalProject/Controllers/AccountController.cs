@@ -9,6 +9,7 @@ namespace HospitalFinalProject.Controllers
 {
     public class AccountController : Controller
     {
+        #region Identity
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
@@ -20,7 +21,9 @@ namespace HospitalFinalProject.Controllers
             _roleManager = roleManager;
             _signInManager = signInManager;
         }
+        #endregion
 
+        #region Login
         public IActionResult Login()
         {
             return View();
@@ -62,6 +65,7 @@ namespace HospitalFinalProject.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+        #endregion
 
         #region Register
         public IActionResult Register()
@@ -102,12 +106,109 @@ namespace HospitalFinalProject.Controllers
         }
         #endregion
 
+        #region LogOut
         public async Task<IActionResult> LogOut()
         {
 
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
+        #endregion
+
+        #region ForgotPassword
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(forgotPasswordVM.Email);
+
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "bele email yoxdu");
+                return View();
+            }
+            string token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+
+            string callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, Token = token }, HttpContext.Request.Scheme, "localhost:44370");
+
+            string body = $"Zəhmət olmasa, aşağıdakı linkə klikləməklə parolunuzu sıfırlayın: <a href='{callbackUrl}'>Reset Password</a>";
+
+
+            await Helper.SendMail(callbackUrl, forgotPasswordVM.Email);
+
+
+
+            TempData["ConfirmationMessage"] = "mektub gonderildi emaile";
+            return RedirectToAction(nameof(ForgotPassword));
+        }
+        #endregion
+        #region ResetPassword
+        public async Task<IActionResult> ResetPassword(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return NotFound();
+            }
+
+            AppUser appUser = await _userManager.FindByIdAsync(userId);
+
+            if (appUser == null)
+            {
+                return BadRequest();
+            }
+
+            ResetPasswordVM model = new ResetPasswordVM
+            {
+                Id = userId,
+                Token = token
+            };
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(string userId, string token, ResetPasswordVM resetPasswordVM)
+        {
+            if (userId == null || token == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(resetPasswordVM);
+            }
+
+            AppUser appUser = await _userManager.FindByIdAsync(userId);
+
+            if (appUser == null)
+            {
+                return BadRequest();
+            }
+
+            IdentityResult identityResult = await _userManager.ResetPasswordAsync(appUser, token, resetPasswordVM.Password);
+
+            if (!identityResult.Succeeded)
+            {
+                foreach (IdentityError error in identityResult.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return View(resetPasswordVM);
+            }
+
+            return RedirectToAction("Login", "Account");
+        }
+
+        #endregion
         #region CreateRole
         //public async Task CreateRoles()
         //{
