@@ -269,73 +269,45 @@
 
                     <li class="nav-label">Əsas</li>
                     <li class="mb-2">
-                        <a class="has-arrow" aria-expanded="false">
-                            <i class="ti-wheelchair"></i><span class="nav-text">Xəstələr</span>
+                        <a asp-controller="Patient" asp-action="Index">
+                            <i class="ti-wheelchair"></i><span class="nav-text">Pasientlər</span>
                         </a>
-                        <ul aria-expanded="false">
-                            <li><a asp-controller="Patient" asp-action="Index">Xəstələrin siyahısı</a></li>
-                            <li><a asp-controller="Patient" asp-action="Create">Xəstə əlavə etmək</a></li>
-                        </ul>
                     </li>
                     <li class="mb-2">
-                        <a class="has-arrow" aria-expanded="false">
+                        <a asp-controller="Department" asp-action="Index">
                             <i class="fa-solid fa-building"></i><span class="nav-text">Şöbələr</span>
                         </a>
-                        <ul aria-expanded="false">
-                            <li><a asp-controller="Department" asp-action="Index">Şöbələrin siyahısı</a></li>
-                            <li><a asp-controller="Department" asp-action="Create">Şöbə yaratmaq</a></li>
-                        </ul>
                     </li>
                     <li class="mb-2">
-                        <a class="has-arrow" aria-expanded="false">
+                        <a asp-controller="Doctor" asp-action="Index">
                             <i class="fa-solid fa-user-doctor"></i><span class="nav-text">Həkimlər</span>
                         </a>
-                        <ul aria-expanded="false">
-                            <li><a asp-controller="Doctor" asp-action="Index">Həkimlərin siyahısı</a></li>
-                            <li><a asp-controller="Doctor" asp-action="Create">Həkim əlavə etmək</a></li>
-                        </ul>
                     </li>
                     <li class="mb-2">
-                        <a class="has-arrow" aria-expanded="false">
+                        <a asp-controller="Appointment" asp-action="Index">
                             <i class="fa-solid fa-calendar-check"></i><span class="nav-text">Rezervlər</span>
                         </a>
-                        <ul aria-expanded="false">
-                            <li><a asp-controller="Appointment" asp-action="Index">Rezervlərin siyahısı</a></li>
-                            <li><a asp-controller="Appointment" asp-action="Create">Rezerv əlavə etmək</a></li>
-                        </ul>
                     </li>
                     <li class="mb-2">
-                        <a class="has-arrow" aria-expanded="false">
+                        <a asp-controller="Staff" asp-action="Index">
                             <i class="fa-solid fa-user-tie"></i><span class="nav-text">İşçilər</span>
                         </a>
-                        <ul aria-expanded="false">
-                            <li><a asp-controller="Staff" asp-action="Index">İşçilərin siyahısı</a></li>
-                            <li><a asp-controller="Staff" asp-action="Create">İşçi əlavə etmək</a></li>
-                        </ul>
                     </li>
                     <li class="mb-2">
-                        <a class="has-arrow" aria-expanded="false">
+                        <a asp-controller="Room" asp-action="Index">
                             <i class="fa-solid fa-bed"></i><span class="nav-text">Otaq Təyinatı</span>
                         </a>
-                        <ul aria-expanded="false">
-                            <li><a asp-controller="Room" asp-action="Index">Otaqlar siyahısı</a></li>
-                            <li><a asp-controller="Room" asp-action="Create">Otaq təyinatı əlavə etmək</a></li>
-                        </ul>
                     </li>
                     <li class="mb-2">
-                        <a class="has-arrow" aria-expanded="false">
+                        <a asp-controller="Room" asp-action="Index">
                             <i class="fa-solid fa-money-bill"></i><span class="nav-text">Gəlirlər</span>
                         </a>
-                        <ul aria-expanded="false">
-                            <li><a asp-controller="Room" asp-action="Index">Gəlirlərin siyahısı</a></li>
-                            <li><a asp-controller="Room" asp-action="Create">Otaq təyinatı əlavə etmək</a></li>
-                        </ul>
                     </li>
-                    <li class="mb-2">
-                        <a aria-expanded="false" asp-controller="Users" asp-action="Index">
-                            <i class="fa-solid fa-users"></i><span class="nav-text">Hesablar</span>
-                        </a>
-                    </li>
+                        <li class="mb-2">
+                            <a aria-expanded="false" asp-controller="Users" asp-action="Index">
+                                <i class="fa-solid fa-users"></i><span class="nav-text">Hesablar</span>
+                            </a>
+                        </li>
 
                     @*<li>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="false">

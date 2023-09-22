@@ -182,3 +182,7 @@ C:\Users\LEGION\Desktop\Projects\Backend\HospitalFinalProject\HospitalFinalProje
 C:\Users\LEGION\Desktop\Projects\Backend\HospitalFinalProject\HospitalFinalProject\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
 C:\Users\LEGION\Desktop\Projects\Backend\HospitalFinalProject\HospitalFinalProject\obj\Debug\net5.0\Razor\Views\Users\Index.cshtml.g.cs
 C:\Users\LEGION\Desktop\Projects\Backend\HospitalFinalProject\HospitalFinalProject\obj\Debug\net5.0\Razor\Views\Users\Create.cshtml.g.cs
+C:\Users\LEGION\Desktop\Projects\Backend\HospitalFinalProject\HospitalFinalProject\obj\Debug\net5.0\Razor\Views\Users\Update.cshtml.g.cs
+C:\Users\LEGION\Desktop\Projects\Backend\HospitalFinalProject\HospitalFinalProject\obj\Debug\net5.0\Razor\Views\Users\ResetPassword.cshtml.g.cs
+C:\Users\LEGION\Desktop\Projects\Backend\HospitalFinalProject\HospitalFinalProject\obj\Debug\net5.0\Razor\Views\Account\ForgotPassword.cshtml.g.cs
+C:\Users\LEGION\Desktop\Projects\Backend\HospitalFinalProject\HospitalFinalProject\obj\Debug\net5.0\Razor\Views\Account\ResetPassword.cshtml.g.cs

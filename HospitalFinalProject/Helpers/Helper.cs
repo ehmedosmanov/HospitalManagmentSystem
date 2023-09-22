@@ -21,8 +21,8 @@ namespace HospitalFinalProject.Helpers
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             MailMessage message = new MailMessage("ahmad.o@itbrains.edu.az", mailTo);
             message.Subject = "sifre sifirlama";
-            message.Body = @$"<h4>sifre yebileme link</h4> 
-                                <p><a href='{resetEmailLink}'>sifre yenile</a></p>";
+            message.Body = @$"<h4>Zəhmət olmasa, aşağıdakı linkə klikləməklə parolunuzu sıfırlayın:</h4> 
+                                <p><a href='{resetEmailLink}'>Şifrənizi yeniləyin</a></p>";
             message.BodyEncoding = System.Text.Encoding.UTF8;
             message.IsBodyHtml = true;
             await client.SendMailAsync(message);
